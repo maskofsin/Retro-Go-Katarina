@@ -1,0 +1,145 @@
+#ifndef JIT_XTENSA_CONFIG_ESP32S3_H
+#define JIT_XTENSA_CONFIG_ESP32S3_H
+
+/*
+ * ESP32-S3 profile used by the current hardware target:
+ *   - LX7 dual-core, 240 MHz class CPU
+ *   - embedded 8 MB PSRAM for emulator RAM/assets
+ *   - internal executable RAM for generated native code
+ *
+ * Include this before jit_xtensa.h, or add these definitions as component
+ * compile definitions. The runtime still clamps CODE_BUFFER_SIZE to the
+ * largest available executable heap block minus JIT_EXEC_IRAM_HEADROOM_BYTES.
+ */
+
+
+#ifndef JIT_XTENSA_USE_WRAPPER
+#define JIT_XTENSA_USE_WRAPPER 1
+#endif
+
+#ifndef JIT_FETCH32_TAKES_REGS
+#define JIT_FETCH32_TAKES_REGS 1
+#endif
+
+#ifndef JIT_USE_REGS_PTRS_MEMLUT
+#define JIT_USE_REGS_PTRS_MEMLUT 1
+#endif
+
+#ifndef JIT_USE_PSXINT_EXECUTEBLOCK_FALLBACK
+#define JIT_USE_PSXINT_EXECUTEBLOCK_FALLBACK 1
+#endif
+
+#ifndef JIT_CHECK_PTRS_INTFETCH
+#define JIT_CHECK_PTRS_INTFETCH 1
+#endif
+
+#ifndef JIT_PSXINT_APPLYCONFIG_REQUIRES_PSXCPU
+#define JIT_PSXINT_APPLYCONFIG_REQUIRES_PSXCPU 1
+#endif
+
+#ifndef JIT_REPAIR_NULL_INTFETCH_WITH_MEMREAD32
+#define JIT_REPAIR_NULL_INTFETCH_WITH_MEMREAD32 1
+#endif
+
+#ifndef JIT_CODE_BUFFER_SIZE
+#define JIT_CODE_BUFFER_SIZE (128u * 1024u)
+#endif
+
+#ifndef JIT_MIN_CODE_BUFFER_SIZE
+#define JIT_MIN_CODE_BUFFER_SIZE (32u * 1024u)
+#endif
+
+#ifndef JIT_MIN_CODE_BUFFER_SIZE
+#define JIT_MIN_CODE_BUFFER_SIZE (48u * 1024u)
+#endif
+
+#ifndef JIT_EXEC_IRAM_HEADROOM_BYTES
+#define JIT_EXEC_IRAM_HEADROOM_BYTES (32u * 1024u)
+#endif
+
+#ifndef JIT_STAGING_BUFFER_SIZE
+#define JIT_STAGING_BUFFER_SIZE (32u * 1024u)
+#endif
+
+#ifndef JIT_CACHE_LINE_BYTES
+#define JIT_CACHE_LINE_BYTES 64u
+#endif
+
+#ifndef JIT_CACHE_SYNC_ALIGN_BYTES
+#define JIT_CACHE_SYNC_ALIGN_BYTES 64u
+#endif
+
+#ifndef JIT_EXEC_ALIGN_BYTES
+#define JIT_EXEC_ALIGN_BYTES 64u
+#endif
+
+#ifndef JIT_BLOCK_HASH_SIZE
+#define JIT_BLOCK_HASH_SIZE 4096u
+#endif
+
+#ifndef JIT_BLOCK_TABLE_IN_SPIRAM
+#define JIT_BLOCK_TABLE_IN_SPIRAM 1
+#endif
+
+#ifndef JIT_MAX_MIPS_INSNS_PER_BLOCK
+#define JIT_MAX_MIPS_INSNS_PER_BLOCK 64u
+#endif
+
+#ifndef JIT_LITERAL_SLOTS_PER_BLOCK
+#define JIT_LITERAL_SLOTS_PER_BLOCK 128u
+#endif
+
+#ifndef JIT_DIRECT_MAIN_RAM_ONLY
+#define JIT_DIRECT_MAIN_RAM_ONLY 1
+#endif
+
+#ifndef JIT_USE_PTRS_PSXM_FOR_MAIN_RAM
+#define JIT_USE_PTRS_PSXM_FOR_MAIN_RAM 1
+#endif
+
+#ifndef JIT_MEM_LUT_PAGE_BASE_IS_BIASED
+#define JIT_MEM_LUT_PAGE_BASE_IS_BIASED 0
+#endif
+
+#ifndef JIT_HAS_MEMWLUT
+#define JIT_HAS_MEMWLUT 1
+#endif
+
+#ifndef JIT_ALLOW_STORE_THROUGH_MEMRLUT_WITHOUT_MEMWLUT
+#define JIT_ALLOW_STORE_THROUGH_MEMRLUT_WITHOUT_MEMWLUT 0
+#endif
+
+#ifndef JIT_FALLBACK_ON_INIT_ALLOC_FAILURE
+#define JIT_FALLBACK_ON_INIT_ALLOC_FAILURE 1
+#endif
+
+
+#ifndef JIT_NORMALIZE_MAIN_RAM_MIRRORS
+#define JIT_NORMALIZE_MAIN_RAM_MIRRORS 1
+#endif
+
+#ifndef JIT_TRACK_STORES_FOR_SMC
+#define JIT_TRACK_STORES_FOR_SMC 1
+#endif
+
+#ifndef JIT_END_BLOCK_AFTER_STORE
+#define JIT_END_BLOCK_AFTER_STORE 1
+#endif
+
+#ifndef JIT_STRICT_MEMRLUT_NULL_CHECKS
+#define JIT_STRICT_MEMRLUT_NULL_CHECKS 1
+#endif
+
+#ifndef JIT_STRICT_ALIGNMENT_CHECKS
+#define JIT_STRICT_ALIGNMENT_CHECKS 1
+#endif
+
+#ifndef JIT_USE_WINDOWED_ABI
+#if defined(CONFIG_COMPILER_CALL0_ABI)
+#define JIT_USE_WINDOWED_ABI 0
+#else
+#define JIT_USE_WINDOWED_ABI 1
+#endif
+#endif
+
+#endif /* JIT_XTENSA_CONFIG_ESP32S3_H */

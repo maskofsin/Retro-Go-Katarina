@@ -1,0 +1,103 @@
+set(PCSX_VENDOR_ROOT "${PCSX_VENDOR_DIR}")
+
+set(PCSX_VENDOR_CORE_SOURCES
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/cdriso.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/cdrom-async.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/cdrom.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/cheat.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/database.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/decode_xa.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/gpu.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/gte.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/gte_divider.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/gte_nf.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/mdec.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/misc.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/pad.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/plugins.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/ppf.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/psxbios.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/psxcommon.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/psxcounters.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/psxdma.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/psxevents.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/psxhw.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/psxinterpreter.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/psxmem.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/r3000a.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/sio.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/spu.c"
+)
+
+set(PCSX_VENDOR_PLUGIN_SOURCES
+    "${PCSX_VENDOR_ROOT}/frontend/cspace.c"
+    "${PCSX_VENDOR_ROOT}/frontend/plugin.c"
+    "${PCSX_VENDOR_ROOT}/plugins/cdrcimg/cdrcimg.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/adsr.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/dma.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/freeze.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/nullsnd.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/out.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/registers.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/reverb.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/spu.c"
+    "${PCSX_VENDOR_ROOT}/plugins/dfsound/xa.c"
+    "${PCSX_VENDOR_ROOT}/plugins/gpulib/gpu.c"
+    "${PCSX_VENDOR_ROOT}/plugins/gpulib/prim.c"
+    "${PCSX_VENDOR_ROOT}/plugins/gpulib/vout_pl.c"
+    "${PCSX_VENDOR_ROOT}/plugins/gpu_unai/gpulib_if.cpp"
+)
+
+set(PCSX_VENDOR_ZLIB_SOURCES
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/adler32.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/compress.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/crc32.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/deflate.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/gzclose.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/gzlib.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/gzread.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/gzwrite.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/infback.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/inffast.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/inflate.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/inftrees.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/trees.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/uncompr.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zlib-1.3.1/zutil.c"
+)
+
+set(PCSX_VENDOR_CHD_SOURCES
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/src/libchdr_bitstream.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/src/libchdr_cdrom.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/src/libchdr_chd.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/src/libchdr_flac.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/src/libchdr_huffman.c"
+)
+
+set(PCSX_VENDOR_LZMA_SOURCES
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/lzma-24.05/src/Alloc.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/lzma-24.05/src/CpuArch.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/lzma-24.05/src/Delta.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/lzma-24.05/src/LzFind.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/lzma-24.05/src/LzmaDec.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/lzma-24.05/src/LzmaEnc.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/lzma-24.05/src/Sort.c"
+)
+
+set(PCSX_VENDOR_ZSTD_SOURCES
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/common/entropy_common.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/common/error_private.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/common/fse_decompress.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/common/xxhash.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/common/zstd_common.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/decompress/huf_decompress.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/decompress/zstd_ddict.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/decompress/zstd_decompress.c"
+    "${PCSX_VENDOR_ROOT}/deps/libchdr/deps/zstd-1.5.6/lib/decompress/zstd_decompress_block.c"
+)
+
+set(PCSX_VENDOR_OPTIONAL_SOURCES
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/debug.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/disr3000a.c"
+    "${PCSX_VENDOR_ROOT}/libpcsxcore/socket.c"
+)
