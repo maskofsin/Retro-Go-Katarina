@@ -37,7 +37,7 @@ A fork of [Retro-Go](https://github.com/ducalex/retro-go) optimized for the **Ka
 ## Supported systems
 - Nintendo: **NES, SNES, Gameboy, Gameboy Color, Game & Watch, GBA**
 - Sega: **SG-1000, Master System, Mega Drive / Genesis, Game Gear**
-- Sony: **PlayStation** (proof of concept, ~30 FPS)
+- Sony: **PlayStation** (proof of concept, 10-20 FPS)
 - Bandai: **WonderSwan, WonderSwan Color**
 - SNK: **Neo Geo Pocket, Neo Geo Pocket Color**
 - Coleco: **Colecovision**
@@ -203,7 +203,7 @@ to a save state if present.
 - Built-in BIOS fallback used by default (`boot_game` mode)
 
 ### PSX
-- ~30 FPS, proof of concept quality
+- 10-25 FPS, proof of concept quality
 - CD cache recommended (64 sectors)
 - JIT disabled — no executable RAM on ESP32-S3
 
@@ -231,12 +231,7 @@ If you wish to build or modify this fork, you can find help in the following doc
 - The PlayStation emulator is a port of [PCSX ReArmed](https://github.com/notaz/pcsx_rearmed).
 - The WonderSwan emulator is a port of [Oswan](https://github.com/icculus/oswan).
 - The Neo Geo Pocket emulator is a port of [Beetle NGP](https://github.com/libretro/beetle-ngp-libretro).
-- PNG support is provided by [lodepng](https://github.com/lvandeve/lodepng/).
-- PCE cover art is from [Christian_Haitian](https://github.com/christianhaitian).
-- Some icons from [Rokey](https://iconarchive.com/show/seed-icons-by-rokey.html).
-- Background images from [es-theme-gbz35](https://github.com/rxbrad/es-theme-gbz35).
-- Special thanks to [RGHandhelds](https://www.rghandhelds.com/) and [MyRetroGamecase](https://www.myretrogamecase.com/) for sending me a [G32](https://www.myretrogamecase.com/products/game-mini-g32-esp32-retro-gaming-console-1) device.
-- The [ODROID-GO](https://forum.odroid.com/viewtopic.php?f=159&t=37599) community for encouraging the development of retro-go!
+
 
 # License
 Everything in this project is licensed under the [GPLv2 license](COPYING) with the exception of the following components:
