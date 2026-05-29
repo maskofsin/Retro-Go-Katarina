@@ -1,27 +1,62 @@
-# Table of contents
-- [Description](#description)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Issues](#issues)
-- [Development](#development)
-- [Acknowledgements](#acknowledgements)
-- [License](#license)
+# Retro-Go Katarina
 
-# Description
-Retro-Go is a firmware to play retro games on ESP32-based devices (officially supported are
-ODROID-GO and MRGC-G32, check [this list for other devices](components/retro-go/README.md)).
-The project consists of a launcher and half a dozen applications that have been heavily
-optimized to reduce their cpu, memory, and flash needs without reducing compatibility!
+A fork of [Retro-Go](https://github.com/ducalex/retro-go) optimized for the **Katarina ESP32-S3 handheld** (240×240 LCD, 8MB PSRAM, 16MB flash).
 
-### Supported systems:
-- Nintendo: **NES, SNES (slow), Gameboy, Gameboy Color, Game & Watch**
+## What's new in this fork
+
+### PlayStation (PSX) — Proof of Concept
+- Port of PCSX ReArmed running on ESP32-S3
+- ~30 FPS at ~60% CPU via cycle multiplier 500, ICACHE 1536, -O3 IRAM interpreter
+- CD cache 64, fast lighting, 320×240 scaler
+- JIT dynarec disabled (zero `MALLOC_CAP_EXEC` on S3)
+
+### Game Boy Advance (GBA) — Limited Performance
+- Block interpreter targeting Thumb (hot path), with ARM fallback via normal interpreter
+- **60 FPS @ 29% BUSY** during cached code (intro/title screens)
+- **30-35 FPS @ 99-100% BUSY** in-game on 16MB ROMs — bottleneck is SD card paging, not CPU
+- 512KB cache blocks with page-level LRU, prefetch, and optional resident-ROM mode
+- 256-entry ICACHE opcode cache in IRAM
+- Wait-state caps, cycle accounting fast-path, `__builtin_expect` branch hints
+- No ZIP support (4MB ROM extraction exhausts PSRAM)
+
+### SNES — Improved Performance
+- Data cache increased 32→64KB
+- CyclesPercentage bumped 100→105
+- `-fomit-frame-pointer` optimization
+
+### WonderSwan / Neo Geo Pocket
+- Added from upstream `retro-go-dev` branch
+- NGP: audio on separate FreeRTOS task, overclock tunable
+
+### Platform
+- Targeted at ESP32-S3 (Xtensa LX7 @ 240MHz, no overclock — breaks SPI LCD)
+- Rebuilt partition table: each app on its own OTA partition with unique subtype
+- Launcher at 0x10000, gbsp at 0x940000, oswan, ngp, and more
+- WiFi networking with IP display in Debugging menu
+
+## Supported systems
+- Nintendo: **NES, SNES, Gameboy, Gameboy Color, Game & Watch, GBA**
 - Sega: **SG-1000, Master System, Mega Drive / Genesis, Game Gear**
+- Sony: **PlayStation** (proof of concept, ~30 FPS)
+- Bandai: **WonderSwan, WonderSwan Color**
+- SNK: **Neo Geo Pocket, Neo Geo Pocket Color**
 - Coleco: **Colecovision**
 - NEC: **PC Engine**
 - Atari: **Lynx**
 - Others: **DOOM** (including mods!)
 
-### Retro-Go features:
+## Installation
+
+### Katarina (ESP32-S3)
+Flash the firmware image for your device:
+```
+esptool.py write_flash 0x0 retro-go_1.1_katarina.img
+```
+
+### Building from source
+See [BUILDING.md](BUILDING.md) and [PORTING.md](PORTING.md).
+
+## Retro-Go features
 - In-game menu
 - Favorites and recently played
 - GB color palettes, RTC adjust and save
@@ -38,7 +73,6 @@ optimized to reduce their cpu, memory, and flash needs without reducing compatib
 
 ### Screenshots
 ![Preview](assets/retro-go-preview.jpg)
-
 
 # Installation
 
@@ -80,6 +114,8 @@ _Note: CRC32-based, which is what is used in the pre-made pack, is much slower t
 Some emulators support loading a BIOS. The files should be placed as follows:
 - GB: `/retro-go/bios/gb_bios.bin`
 - GBC: `/retro-go/bios/gbc_bios.bin`
+- GBA: `/retro-go/bios/gba_bios.bin` (optional — built-in BIOS fallback used by default)
+- PSX: `/retro-go/bios/scph5500.bin`, `scph5501.bin`, or `scph5502.bin`
 - FDS: `/retro-go/bios/fds_bios.bin`
 - MSX: In folder `/retro-go/bios/msx/` put: `MSX.ROM` `MSX2.ROM` `MSX2EXT.ROM` `MSX2P.ROM` `MSX2PEXT.ROM` `FMPAC.ROM` `DISK.ROM` `MSXDOS2.ROM` `PAINTER.ROM` `KANJI.ROM`
 
@@ -160,12 +196,20 @@ You can configure automatic SRAM saving in the options menu. A longer delay will
 of losing data when powering down too quickly. Also note that when *resuming* a game, Retro-Go will give priority
 to a save state if present.
 
-### ZIP files
-Most Retro-Go applications now support ZIP files. ZIP archives should contain only one ROM file and nothing else. ZIP support also depends on available memory and larger ROMs may fail to load on some devices unfortunately.
+### GBA
+- 16MB ROMs stutter due to SD card paging (PSRAM cache limited to 4MB)
+- No ZIP support (extraction exhausts PSRAM)
+- Extract `.gba` files on PC and place in `/sd/roms/gba/`
+- Built-in BIOS fallback used by default (`boot_game` mode)
+
+### PSX
+- ~30 FPS, proof of concept quality
+- CD cache recommended (64 sectors)
+- JIT disabled — no executable RAM on ESP32-S3
 
 
 # Development
-If you wish to build or modify Retro-Go, you can find help in the following documents:
+If you wish to build or modify this fork, you can find help in the following documents:
 
 - Build instructions in [BUILDING.md](BUILDING.md)
 - Theming instructions [THEMING.md](THEMING.md)
@@ -183,6 +227,10 @@ If you wish to build or modify Retro-Go, you can find help in the following docu
 - The Genesis emulator is a port of [Gwenesis](https://github.com/bzhxx/gwenesis/) by bzhxx.
 - The Game & Watch emulator is a port of [lcd-game-emulator](https://github.com/bzhxx/lcd-game-emulator) by bzhxx.
 - The MSX emulator is a port of [fMSX](https://fms.komkon.org/fMSX/) by Marat Fayzullin.
+- The GBA emulator is a port of [gpSP](https://github.com/gpsp/gpsp) with Thumb block interpreter optimization.
+- The PlayStation emulator is a port of [PCSX ReArmed](https://github.com/notaz/pcsx_rearmed).
+- The WonderSwan emulator is a port of [Oswan](https://github.com/icculus/oswan).
+- The Neo Geo Pocket emulator is a port of [Beetle NGP](https://github.com/libretro/beetle-ngp-libretro).
 - PNG support is provided by [lodepng](https://github.com/lvandeve/lodepng/).
 - PCE cover art is from [Christian_Haitian](https://github.com/christianhaitian).
 - Some icons from [Rokey](https://iconarchive.com/show/seed-icons-by-rokey.html).
